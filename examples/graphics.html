@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>graphics</title>
+</head>
+
+<body>
+  <script src="../pixi/pixi.js"></script>
+  <script type="text/javascript">
+    let app = new PIXI.Application({
+      width: 512,
+      height: 512,
+      antialiasing: true,
+      transparent: false,
+      backgroundColor: 0x061639,
+      resolution: 1
+    });
+    document.body.appendChild(app.view);
+
+    let stage = app.stage;
+    let centerX = app.view.width / 2;
+    let centerY = app.view.height / 2;
+    let numStar = 1000;
+    let r = 255;
+
+    for (let i = 0; i < numStar; i++) {
+      let star = PIXI.Sprite.from('images/star.png');
+      star.anchor.set(0.5);
+      star.scale.x = 0.1;
+      star.scale.y = 0.1;
+      stage.addChild(star);
+
+      let random = Math.random();
+      let randomAngel = random * Math.PI * 2;
+      //第一种情况 圆
+      star.x = r * Math.cos(randomAngel) + centerX;
+      star.y = r * Math.sin(randomAngel) + centerY;
+      //第二种情况 螺旋曲线
+      star.x = random * r * Math.cos(randomAngel) + centerX;
+      star.y = random * r * Math.sin(randomAngel) + centerY;
+      //第三种情况 反曲线
+      star.x = (1 - random) * r * Math.cos(randomAngel) + centerX;
+      star.y = random * r * Math.sin(randomAngel) + centerY;
+    }
+
+    app.ticker.add((delta) => {
+
+    });
+
+  </script>
+</body>
+
+</html>
