@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>spring</title>
+</head>
+
+<body>
+  <script src="../pixi/pixi.js"></script>
+  <script type="text/javascript">
+    let app = new PIXI.Application({
+      width: 512,
+      height: 512,
+      antialiasing: true,
+      transparent: false,
+      backgroundColor: 0x061639,
+      resolution: 1
+    });
+    document.body.appendChild(app.view);
+
+    let stage = app.stage;
+    let centerX = app.view.width / 2;
+    let centerY = app.view.height / 2;
+    let spring = 0.1;
+    let friction = 0.95
+
+    const bg = new PIXI.Graphics();
+    bg.beginFill(0xDE3249);
+    bg.drawRect(0, 0, app.view.width, app.view.height);
+    bg.endFill();
+    stage.addChild(bg);
+
+    let star = PIXI.Sprite.from('images/star.png');
+    star.anchor.set(0.5);
+    star.scale.x = 0.3;
+    star.scale.y = 0.3;
+    stage.addChild(star);
+    star.x = 0;
+    star.y = 0;
+    let vx = 0;
+    let vy = 0;
+
+    stage.interactive = true;
+    stage.buttonMode = true;
+    stage.on('pointerdown', onClick);
+
+    function onClick(e) {
+      let global = e.data.global;
+      centerX = global.x;
+      centerY = global.y;
+    }
+
+    app.ticker.add((delta) => {
+      let dx = centerX - star.x;
+      let dy = centerY - star.y;
+      let ax = dx * spring;
+      let ay = dy * spring;
+      vx += ax;
+      vy += ay;
+      vx *= friction;
+      vy *= friction;
+      star.x += vx;
+      star.y += vy;
+      star.vx++;
+    });
+
+  </script>
+</body>
+
+</html>

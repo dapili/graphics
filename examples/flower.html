@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>flower</title>
+</head>
+
+<body>
+  <script src="../pixi/pixi.js"></script>
+  <script type="text/javascript">
+    let app = new PIXI.Application({
+      width: 512,
+      height: 512,
+      antialiasing: true,
+      transparent: false,
+      backgroundColor: 0x061639,
+      resolution: 1
+    });
+    document.body.appendChild(app.view);
+
+    let stage = app.stage;
+    let centerX = app.view.width / 2;
+    let centerY = app.view.height / 2;
+
+    let lines = [];
+    let flower = new PIXI.Sprite();
+    //左
+    let petal_1 = createPetal();
+    flower.addChild(petal_1);
+    petal_1.x = -100;
+    petal_1.y = 0;
+    //右
+    let petal_2 = createPetal();
+    flower.addChild(petal_2);
+    petal_2.x = +100;
+    petal_2.y = 0;
+    petal_2.scale.x = -1;
+    //上
+    let petal_3 = createPetal();
+    flower.addChild(petal_3);
+    petal_3.x = 0;
+    petal_3.y = -100;
+    petal_3.rotation = Math.PI / 2;
+    //下
+    let petal_4 = createPetal();
+    flower.addChild(petal_4);
+    petal_4.x = 0;
+    petal_4.y = +100;
+    petal_4.rotation = - Math.PI / 2;
+
+    stage.addChild(flower);
+    flower.x = centerX;
+    flower.y = centerY;
+
+    let targetNum = 0;
+    let targetStep = 0.01;
+
+    app.ticker.add((delta) => {
+      flower.rotation += 0.01;
+      if (targetNum < 1.52) {
+        stepLines(targetNum, 0);
+        targetNum += targetStep;
+      }
+      else {
+        stepLines(targetNum - targetStep, 1);
+      }
+    });
+
+    function stepLines(targetNum, scale) {
+      let r = 100;
+      let cosValue = Math.cos(flower.rotation);
+      for (let i = lines.length - 1; i > -1; i--) {
+        let line = lines[i];
+        line.clear();
+        line.lineStyle(2, 0xffffff);
+        let start = true;
+        for (let i = 0; i < targetNum; i += 0.02) {
+          let ratioAngel = i * Math.PI * 2;
+          let tx = i * r * Math.cos(ratioAngel) * (1 + (scale == 1 ? cosValue : 0)) + 0;
+          let ty = i * r * Math.sin(ratioAngel) * (0.65 + (scale == 1 ? cosValue : 0)) + 0;
+          if (start) {
+            start = false;
+            line.moveTo(tx, ty);
+          }
+          else {
+            line.lineTo(tx, ty);
+          }
+        }
+      }
+    }
+
+    function createPetal() {
+      let petal = new PIXI.Container();
+      let petal_a = createSpiral();
+      let petal_b = createSpiral();
+      petal_b.scale.y = -1;
+      petal.addChild(petal_a);
+      petal.addChild(petal_b);
+      return petal;
+    }
+
+    function createSpiral() {
+      let r = 100;
+      let line = new PIXI.Graphics();
+      line.lineStyle(2, 0xffffff);
+      let start = true;
+      for (let i = 0; i < 1.01; i += 0.02) {
+        let ratioAngel = i * Math.PI * 2;
+        let tx = i * r * Math.cos(ratioAngel) * 1 + 0;
+        let ty = i * r * Math.sin(ratioAngel) * 0.65 + 0;
+        if (start) {
+          start = false;
+          line.moveTo(tx, ty);
+        }
+        else {
+          line.lineTo(tx, ty);
+        }
+      }
+      lines.push(line);
+      return line;
+    }
+
+  </script>
+</body>
+
+</html>
