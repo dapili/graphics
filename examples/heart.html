@@ -34,7 +34,7 @@
     let step = 0.05;
     app.ticker.add((delta) => {
       r += step;
-      star.scale.x = star.scale.y = 1 + Math.cos(r) * dis;
+      star.scale.x = star.scale.y = 1 + Math.cos(r) * dis; //cos取值范围-1到1
     });
 
   </script>

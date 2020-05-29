@@ -38,11 +38,11 @@
       star.x = r * Math.cos(randomAngel) + centerX;
       star.y = r * Math.sin(randomAngel) + centerY;
       //第二种情况 螺旋曲线
-      star.x = random * r * Math.cos(randomAngel) + centerX;
-      star.y = random * r * Math.sin(randomAngel) + centerY;
+      // star.x = random * r * Math.cos(randomAngel) + centerX;
+      // star.y = random * r * Math.sin(randomAngel) + centerY;
       //第三种情况 反曲线
-      star.x = (1 - random) * r * Math.cos(randomAngel) + centerX;
-      star.y = random * r * Math.sin(randomAngel) + centerY;
+      // star.x = (1 - random) * r * Math.cos(randomAngel) + centerX;
+      // star.y = random * r * Math.sin(randomAngel) + centerY;
     }
 
     app.ticker.add((delta) => {

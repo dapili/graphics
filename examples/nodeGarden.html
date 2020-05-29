@@ -26,6 +26,7 @@
     let minDist = 100;
     let springAmount = 0.001;
     let particles = [];
+    let speed = 4;
 
     for (let i = 0; i < numStar; i++) {
       let star = PIXI.Sprite.from('images/star.png');
@@ -34,18 +35,21 @@
       star.scale.y = 0.1;
       star.x = Math.random() * app.view.width;
       star.y = Math.random() * app.view.height;
-      star.vx = Math.random() * 6 - 3;
-      star.vy = Math.random() * 6 - 3;
+      star.vx = Math.random() * speed - 2;
+      star.vy = Math.random() * speed - 2;
       stage.addChild(star);
       particles.push(star);
     }
 
+    let friction = 0.9999;
     app.ticker.add((delta) => {
       line.clear();
       for (let i = 0; i < numStar; i++) {
         let particle = particles[i];
         particle.x += particle.vx;
         particle.y += particle.vy;
+        particle.vx *= friction;
+        particle.vy *= friction;
         if (particle.x > app.view.width) {
           particle.x = 0;
         }
@@ -78,14 +82,15 @@
       let dy = partB.y - partA.y;
       let dist = Math.sqrt(dx * dx + dy * dy);
       if (dist < minDist) {
-        line.lineStyle(1, 0xffffff, 1 - dist / minDist);
+        line.lineStyle(1, 0xffffff, 1 - dist / minDist); //距离越近线越粗
+        line.lineStyle(1, 0xffffff, 1);
         line.moveTo(partA.x, partA.y);
         line.lineTo(partB.x, partB.y);
-        let ax = dx * springAmount;
+        let ax = dx * springAmount; //距离越远加速度越大
         let ay = dy * springAmount;
-        partA.vx += ax;
+        partA.vx += ax; //一方加速靠近
         partA.vy += ay;
-        partB.vx -= ax;
+        partB.vx -= ax; //一方逐渐减速
         partB.vy -= ay;
       }
     }

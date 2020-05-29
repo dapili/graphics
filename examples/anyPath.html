@@ -112,6 +112,7 @@
           let dist = Math.sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
           let ratio = 200;
           gsap.to(star, { duration: dist / ratio, delay: time / ratio, ease: "none", pixi: { x: p2.x, y: p2.y } });
+          gsap.to(star, { duration: dist / ratio, delay: time / ratio, pixi: { x: p2.x, y: p2.y } }); //其默认缓动效果
           time += dist;
         }
       }

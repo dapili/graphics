@@ -36,7 +36,7 @@
     app.ticker.add((delta) => {
       star.x = centerX + Math.cos(angle) * rx;
       star.y = centerY + Math.sin(angle) * rx;
-      // star.y = centerY + Math.sin(angle) * ry; //eclipse
+      // star.y = centerY + Math.sin(angle) * ry; //eclipse：x半径和y半径相等时为标准圆，不等则为椭圆
       angle += step;
     });
 

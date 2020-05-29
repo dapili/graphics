@@ -26,7 +26,7 @@
     let lines = [];
     let flower = new PIXI.Sprite();
     //左
-    let petal_1 = createPetal();
+    let petal_1 = createPetal(); //叶片做为整体变换位置
     flower.addChild(petal_1);
     petal_1.x = -100;
     petal_1.y = 0;
@@ -57,14 +57,14 @@
     let targetStep = 0.01;
 
     app.ticker.add((delta) => {
-      flower.rotation += 0.01;
-      if (targetNum < 1.52) {
-        stepLines(targetNum, 0);
-        targetNum += targetStep;
-      }
-      else {
-        stepLines(targetNum - targetStep, 1);
-      }
+      // flower.rotation += 0.01;
+      // if (targetNum < 1.52) {
+      //   stepLines(targetNum, 0);
+      //   targetNum += targetStep;
+      // }
+      // else {
+      //   stepLines(targetNum - targetStep, 1);
+      // }
     });
 
     function stepLines(targetNum, scale) {
@@ -77,7 +77,7 @@
         let start = true;
         for (let i = 0; i < targetNum; i += 0.02) {
           let ratioAngel = i * Math.PI * 2;
-          let tx = i * r * Math.cos(ratioAngel) * (1 + (scale == 1 ? cosValue : 0)) + 0;
+          let tx = i * r * Math.cos(ratioAngel) * (1 + (scale == 1 ? cosValue : 0)) + 0; //同createPetal代码一致，稍许控制变量
           let ty = i * r * Math.sin(ratioAngel) * (0.65 + (scale == 1 ? cosValue : 0)) + 0;
           if (start) {
             start = false;
@@ -108,7 +108,7 @@
       for (let i = 0; i < 1.01; i += 0.02) {
         let ratioAngel = i * Math.PI * 2;
         let tx = i * r * Math.cos(ratioAngel) * 1 + 0;
-        let ty = i * r * Math.sin(ratioAngel) * 0.65 + 0;
+        let ty = i * r * Math.sin(ratioAngel) * 0.65 + 0; //收缩y值，使叶片狭长
         if (start) {
           start = false;
           line.moveTo(tx, ty);
