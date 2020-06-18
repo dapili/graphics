@@ -57,15 +57,16 @@
         let global = e.data.global;
         let gx = Math.round(global.x);
         let gy = Math.round(global.y);
-        let point = { x: gx, y: gy };
+        let cur = { x: gx, y: gy };
         let last = points[points.length - 1];
         if (last) {
-          if (points.x != last.x || points.y != last.y) {
-            points.push(point);
-          }
+          // if (cur.x != last.x || cur.y != last.y) { //过不过滤无影响
+          //   points.push(cur);
+          // }
+          points.push(cur);
         }
         else {
-          points.push(point);
+          points.push(cur);
         }
         drawLine();
       }
@@ -111,8 +112,9 @@
           }
           let dist = Math.sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
           let ratio = 200;
+		  //后面的缓动需要delay的时间等于前面缓动的总时间，以形成连续的缓动
           gsap.to(star, { duration: dist / ratio, delay: time / ratio, ease: "none", pixi: { x: p2.x, y: p2.y } });
-          gsap.to(star, { duration: dist / ratio, delay: time / ratio, pixi: { x: p2.x, y: p2.y } }); //其默认缓动效果
+          // gsap.to(star, { duration: dist / ratio, delay: time / ratio, pixi: { x: p2.x, y: p2.y } }); //其默认缓动效果
           time += dist;
         }
       }

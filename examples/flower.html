@@ -57,14 +57,14 @@
     let targetStep = 0.01;
 
     app.ticker.add((delta) => {
-      // flower.rotation += 0.01;
-      // if (targetNum < 1.52) {
-      //   stepLines(targetNum, 0);
-      //   targetNum += targetStep;
-      // }
-      // else {
-      //   stepLines(targetNum - targetStep, 1);
-      // }
+      flower.rotation += 0.01;
+      if (targetNum < 1.52) {
+        stepLines(targetNum, 0);
+        targetNum += targetStep;
+      }
+      else {
+        stepLines(targetNum - targetStep, 1);
+      }
     });
 
     function stepLines(targetNum, scale) {
